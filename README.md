@@ -1,4 +1,4 @@
-# Hi there 👋, I'm Abdulaziz Khatamov
+# Hi there 👋, I'm Abdulaziz
 
 ### 🔭 Full-Stack JavaScript Developer
 
