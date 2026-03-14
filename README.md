@@ -28,4 +28,4 @@ Currently based in Fergana, Uzbekistan. Available for freelance and contract wor
 
 - Email: [abdulazizkhatamov@hotmail.com](mailto:abdulazizkhatamov@hotmail.com)
 - Telegram: [@abdulaziz_khatamov](https://t.me/abdulaziz_khatamov)
-- Portfolio: [abdulazizkhatamov.vercel.app](https://abdulazizkhatamov.vercel.app)
+- Portfolio: [abdulaziz.cv](https://abdulaziz.cv)
