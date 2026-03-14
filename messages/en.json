@@ -76,5 +76,16 @@
     "theme_toggle": "Toggle theme",
     "back": "Back",
     "loading": "Loading..."
+  },
+  "not_found": {
+    "title": "Page Not Found",
+    "description": "The page you're looking for doesn't exist or has been moved.",
+    "back_home": "Back to Home"
+  },
+  "error": {
+    "title": "Something Went Wrong",
+    "description": "An unexpected error occurred. Please try again.",
+    "try_again": "Try Again",
+    "back_home": "Back to Home"
   }
 }

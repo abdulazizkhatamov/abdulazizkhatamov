@@ -76,5 +76,16 @@
     "theme_toggle": "Mavzuni o'zgartirish",
     "back": "Orqaga",
     "loading": "Yuklanmoqda..."
+  },
+  "not_found": {
+    "title": "Sahifa topilmadi",
+    "description": "Siz qidirayotgan sahifa mavjud emas yoki ko'chirilgan.",
+    "back_home": "Bosh sahifaga qaytish"
+  },
+  "error": {
+    "title": "Xatolik yuz berdi",
+    "description": "Kutilmagan xatolik yuz berdi. Qayta urinib ko'ring.",
+    "try_again": "Qayta urinish",
+    "back_home": "Bosh sahifaga qaytish"
   }
 }
