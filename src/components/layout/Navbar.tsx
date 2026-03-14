@@ -44,7 +44,10 @@ export default function Navbar() {
           href="/"
           className="text-sm font-semibold tracking-tight text-(--color-text) dark:text-(--color-text-dark) hover:text-(--color-accent) dark:hover:text-(--color-accent-dark) transition-colors"
         >
-          AH<span className="text-(--color-accent) dark:text-(--color-accent-dark)">.</span>
+          abdulaziz
+          <span className="text-(--color-accent) dark:text-(--color-accent-dark)">
+            .cv
+          </span>
         </Link>
 
         {/* Desktop nav */}
@@ -72,9 +75,15 @@ export default function Navbar() {
             onClick={() => setMenuOpen((v) => !v)}
             aria-label="Toggle menu"
           >
-            <span className={`block h-0.5 w-5 bg-(--color-text) dark:bg-(--color-text-dark) transition-all ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
-            <span className={`block h-0.5 w-5 bg-(--color-text) dark:bg-(--color-text-dark) transition-all ${menuOpen ? "opacity-0" : ""}`} />
-            <span className={`block h-0.5 w-5 bg-(--color-text) dark:bg-(--color-text-dark) transition-all ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`} />
+            <span
+              className={`block h-0.5 w-5 bg-(--color-text) dark:bg-(--color-text-dark) transition-all ${menuOpen ? "translate-y-2 rotate-45" : ""}`}
+            />
+            <span
+              className={`block h-0.5 w-5 bg-(--color-text) dark:bg-(--color-text-dark) transition-all ${menuOpen ? "opacity-0" : ""}`}
+            />
+            <span
+              className={`block h-0.5 w-5 bg-(--color-text) dark:bg-(--color-text-dark) transition-all ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`}
+            />
           </button>
         </div>
       </nav>
