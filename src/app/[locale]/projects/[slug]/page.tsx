@@ -1,10 +1,12 @@
 export const dynamic = "force-dynamic";
 
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import prisma from "@/lib/prisma";
-import type { Metadata } from "next";
+
+const BASE_URL = "https://abdulaziz.cv";
 
 type RepoDetail = {
   name: string;
@@ -23,12 +25,36 @@ type ProjectDetails = {
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const project = await prisma.project.findUnique({ where: { slug } });
   if (!project) return {};
+
+  const title = project.title;
+  const description = project.description;
+  const url = `${BASE_URL}/${locale}/projects/${slug}`;
+
   return {
-    title: `${project.title} — Abdulaziz Hatamov`,
-    description: project.description,
+    title,
+    description,
+    alternates: {
+      canonical: url,
+      languages: {
+        en: `${BASE_URL}/en/projects/${slug}`,
+        uz: `${BASE_URL}/uz/projects/${slug}`,
+        ru: `${BASE_URL}/ru/projects/${slug}`,
+        "x-default": `${BASE_URL}/en/projects/${slug}`,
+      },
+    },
+    openGraph: {
+      title,
+      description,
+      url,
+      type: "article",
+    },
+    twitter: {
+      title,
+      description,
+    },
   };
 }
 
@@ -125,7 +151,6 @@ export default async function ProjectDetailPage({ params }: Props) {
                     key={i}
                     className="rounded-2xl border border-(--color-border) dark:border-(--color-border-dark) bg-(--color-surface) dark:bg-(--color-surface-dark) overflow-hidden"
                   >
-                    {/* Repo header */}
                     <div className="px-6 pt-6 pb-4 border-b border-(--color-border) dark:border-(--color-border-dark)">
                       <div className="flex flex-wrap items-baseline gap-3 mb-2">
                         <h3 className="text-lg font-bold text-(--color-text) dark:text-(--color-text-dark)">
@@ -141,7 +166,6 @@ export default async function ProjectDetailPage({ params }: Props) {
                     </div>
 
                     <div className="px-6 py-4 flex flex-col gap-5">
-                      {/* Repo tech */}
                       <div className="flex flex-wrap gap-1.5">
                         {repo.techStack.map((tech) => (
                           <span
@@ -153,7 +177,6 @@ export default async function ProjectDetailPage({ params }: Props) {
                         ))}
                       </div>
 
-                      {/* Highlights */}
                       <ul className="flex flex-col gap-3">
                         {repo.highlights.map((point, j) => (
                           <li key={j} className="flex items-start gap-3 text-sm text-(--color-text) dark:text-(--color-text-dark) leading-relaxed">

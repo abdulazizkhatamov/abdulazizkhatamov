@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic";
 
-import { setRequestLocale } from "next-intl/server";
+import type { Metadata } from "next";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import HeroSection from "@/components/sections/HeroSection";
 import AboutSection from "@/components/sections/AboutSection";
 import SkillsSection from "@/components/sections/SkillsSection";
@@ -10,7 +11,44 @@ import LatestPosts from "@/components/sections/LatestPosts";
 import ContactCTA from "@/components/sections/ContactCTA";
 import prisma from "@/lib/prisma";
 
+const BASE_URL = "https://abdulaziz.cv";
+
 type Props = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "hero" });
+  const about = await getTranslations({ locale, namespace: "about" });
+
+  const title = `Abdulaziz Hatamov — ${t("role")}`;
+  const description = about("bio");
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `${BASE_URL}/${locale}`,
+      languages: {
+        en: `${BASE_URL}/en`,
+        uz: `${BASE_URL}/uz`,
+        ru: `${BASE_URL}/ru`,
+        "x-default": `${BASE_URL}/en`,
+      },
+    },
+    openGraph: {
+      title,
+      description,
+      url: `${BASE_URL}/${locale}`,
+      type: "profile",
+      firstName: "Abdulaziz",
+      lastName: "Hatamov",
+    },
+    twitter: {
+      title,
+      description,
+    },
+  };
+}
 
 export default async function HomePage({ params }: Props) {
   const { locale } = await params;

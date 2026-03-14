@@ -8,6 +8,8 @@ import { routing } from "@/i18n/routing";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
+const BASE_URL = "https://abdulaziz.cv";
+
 type Props = {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
@@ -20,9 +22,33 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "hero" });
+  const about = await getTranslations({ locale, namespace: "about" });
+
+  const title = `Abdulaziz Hatamov — ${t("role")}`;
+  const description = about("bio");
+
   return {
-    title: `Abdulaziz Hatamov — ${t("role")}`,
-    description: t("tagline"),
+    title,
+    description,
+    alternates: {
+      canonical: `${BASE_URL}/${locale}`,
+      languages: {
+        en: `${BASE_URL}/en`,
+        uz: `${BASE_URL}/uz`,
+        ru: `${BASE_URL}/ru`,
+        "x-default": `${BASE_URL}/en`,
+      },
+    },
+    openGraph: {
+      title,
+      description,
+      url: `${BASE_URL}/${locale}`,
+      type: "website",
+    },
+    twitter: {
+      title,
+      description,
+    },
   };
 }
 
