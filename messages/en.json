@@ -1,0 +1,80 @@
+{
+  "nav": {
+    "about": "About",
+    "skills": "Skills",
+    "experience": "Experience",
+    "projects": "Projects",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "hero": {
+    "greeting": "Hi, I'm",
+    "role": "Frontend Developer",
+    "tagline": "I build fast, accessible, and production-ready web applications with React and TypeScript.",
+    "cta_projects": "View Projects",
+    "cta_cv": "Open CV",
+    "available": "Open to opportunities"
+  },
+  "about": {
+    "title": "About Me",
+    "bio": "Frontend Developer with 4+ years of experience building and shipping production web applications. Deep expertise in the React and TypeScript ecosystem — scalable component architecture, real-time interfaces, API integrations, and performance-focused development.",
+    "location": "Fergana, Uzbekistan",
+    "experience": "4+ years",
+    "label_location": "Location",
+    "label_experience": "Experience",
+    "label_languages": "Languages"
+  },
+  "skills": {
+    "title": "Skills",
+    "categories": {
+      "Core": "Core",
+      "Frontend": "Frontend",
+      "UI": "UI & Design",
+      "Backend": "Backend",
+      "APIs": "APIs",
+      "DevOps": "DevOps",
+      "Testing": "Testing"
+    }
+  },
+  "experience": {
+    "title": "Experience",
+    "present": "Present"
+  },
+  "projects": {
+    "title": "Projects",
+    "featured_title": "Featured Projects",
+    "view_all": "View all projects",
+    "live": "Live",
+    "source": "Source"
+  },
+  "blog": {
+    "title": "Blog",
+    "latest_title": "Latest Posts",
+    "view_all": "Read all posts",
+    "read_more": "Read more",
+    "min_read": "min read"
+  },
+  "contact": {
+    "title": "Contact",
+    "cta_title": "Let's work together",
+    "cta_subtitle": "Have a project in mind or just want to talk? I'm always open to new opportunities.",
+    "cta_button": "Get in touch",
+    "form_name": "Name",
+    "form_email": "Email",
+    "form_subject": "Subject",
+    "form_message": "Message",
+    "form_send": "Send Message",
+    "form_sending": "Sending...",
+    "form_success": "Message sent! I'll get back to you soon.",
+    "form_error": "Something went wrong. Please try again."
+  },
+  "footer": {
+    "built_with": "Built with Next.js & Tailwind CSS",
+    "rights": "All rights reserved."
+  },
+  "common": {
+    "theme_toggle": "Toggle theme",
+    "back": "Back",
+    "loading": "Loading..."
+  }
+}

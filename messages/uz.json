@@ -1,0 +1,80 @@
+{
+  "nav": {
+    "about": "Men haqimda",
+    "skills": "Ko'nikmalar",
+    "experience": "Tajriba",
+    "projects": "Loyihalar",
+    "blog": "Blog",
+    "contact": "Aloqa"
+  },
+  "hero": {
+    "greeting": "Salom, men",
+    "role": "Frontend Dasturchi",
+    "tagline": "React va TypeScript yordamida tez, qulay va ishlab chiqarishga tayyor veb-ilovalar yarataman.",
+    "cta_projects": "Loyihalarni ko'rish",
+    "cta_cv": "CV ni ochish",
+    "available": "Ish imkoniyatlariga ochiqman"
+  },
+  "about": {
+    "title": "Men haqimda",
+    "bio": "4 yildan ortiq tajribaga ega Frontend Dasturchi. React va TypeScript ekotizimida chuqur bilimga ega — kengaytiriladigan komponent arxitekturasi, real vaqt interfeyslari, API integratsiyalari va ishlash samaradorligiga yo'naltirilgan ishlanmalar.",
+    "location": "Farg'ona, O'zbekiston",
+    "experience": "4+ yil",
+    "label_location": "Joylashuv",
+    "label_experience": "Tajriba",
+    "label_languages": "Tillar"
+  },
+  "skills": {
+    "title": "Ko'nikmalar",
+    "categories": {
+      "Core": "Asosiy",
+      "Frontend": "Frontend",
+      "UI": "UI va Dizayn",
+      "Backend": "Backend",
+      "APIs": "API-lar",
+      "DevOps": "DevOps",
+      "Testing": "Testlash"
+    }
+  },
+  "experience": {
+    "title": "Tajriba",
+    "present": "Hozir"
+  },
+  "projects": {
+    "title": "Loyihalar",
+    "featured_title": "Tanlangan Loyihalar",
+    "view_all": "Barcha loyihalarni ko'rish",
+    "live": "Sayt",
+    "source": "Kod"
+  },
+  "blog": {
+    "title": "Blog",
+    "latest_title": "So'nggi Maqolalar",
+    "view_all": "Barcha maqolalarni o'qish",
+    "read_more": "Ko'proq o'qish",
+    "min_read": "daq o'qish"
+  },
+  "contact": {
+    "title": "Aloqa",
+    "cta_title": "Birgalikda ishlaylik",
+    "cta_subtitle": "Loyiha g'oyangiz bormi yoki shunchaki suhbatlashmoqchimisiz? Men har doim yangi imkoniyatlarga ochiqman.",
+    "cta_button": "Bog'lanish",
+    "form_name": "Ism",
+    "form_email": "Email",
+    "form_subject": "Mavzu",
+    "form_message": "Xabar",
+    "form_send": "Xabar yuborish",
+    "form_sending": "Yuborilmoqda...",
+    "form_success": "Xabar yuborildi! Tez orada javob beraman.",
+    "form_error": "Xatolik yuz berdi. Qayta urinib ko'ring."
+  },
+  "footer": {
+    "built_with": "Next.js va Tailwind CSS bilan yaratilgan",
+    "rights": "Barcha huquqlar himoyalangan."
+  },
+  "common": {
+    "theme_toggle": "Mavzuni o'zgartirish",
+    "back": "Orqaga",
+    "loading": "Yuklanmoqda..."
+  }
+}

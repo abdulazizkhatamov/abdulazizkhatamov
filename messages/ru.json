@@ -1,0 +1,80 @@
+{
+  "nav": {
+    "about": "Обо мне",
+    "skills": "Навыки",
+    "experience": "Опыт",
+    "projects": "Проекты",
+    "blog": "Блог",
+    "contact": "Контакты"
+  },
+  "hero": {
+    "greeting": "Привет, я",
+    "role": "Frontend-разработчик",
+    "tagline": "Создаю быстрые, доступные и готовые к продакшену веб-приложения на React и TypeScript.",
+    "cta_projects": "Смотреть проекты",
+    "cta_cv": "Открыть резюме",
+    "available": "Открыт к предложениям"
+  },
+  "about": {
+    "title": "Обо мне",
+    "bio": "Frontend-разработчик с 4+ годами опыта создания и выпуска продакшен веб-приложений. Глубокая экспертиза в экосистеме React и TypeScript — масштабируемая архитектура компонентов, интерфейсы реального времени, интеграции с API и разработка с фокусом на производительность.",
+    "location": "Фергана, Узбекистан",
+    "experience": "4+ года",
+    "label_location": "Местонахождение",
+    "label_experience": "Опыт",
+    "label_languages": "Языки"
+  },
+  "skills": {
+    "title": "Навыки",
+    "categories": {
+      "Core": "Основные",
+      "Frontend": "Frontend",
+      "UI": "UI и Дизайн",
+      "Backend": "Backend",
+      "APIs": "API",
+      "DevOps": "DevOps",
+      "Testing": "Тестирование"
+    }
+  },
+  "experience": {
+    "title": "Опыт",
+    "present": "По н.в."
+  },
+  "projects": {
+    "title": "Проекты",
+    "featured_title": "Избранные проекты",
+    "view_all": "Все проекты",
+    "live": "Сайт",
+    "source": "Код"
+  },
+  "blog": {
+    "title": "Блог",
+    "latest_title": "Последние статьи",
+    "view_all": "Все статьи",
+    "read_more": "Читать далее",
+    "min_read": "мин чтения"
+  },
+  "contact": {
+    "title": "Контакты",
+    "cta_title": "Давайте работать вместе",
+    "cta_subtitle": "Есть идея для проекта или просто хотите поговорить? Я всегда открыт к новым возможностям.",
+    "cta_button": "Написать мне",
+    "form_name": "Имя",
+    "form_email": "Email",
+    "form_subject": "Тема",
+    "form_message": "Сообщение",
+    "form_send": "Отправить",
+    "form_sending": "Отправка...",
+    "form_success": "Сообщение отправлено! Скоро отвечу.",
+    "form_error": "Что-то пошло не так. Попробуйте ещё раз."
+  },
+  "footer": {
+    "built_with": "Создано на Next.js и Tailwind CSS",
+    "rights": "Все права защищены."
+  },
+  "common": {
+    "theme_toggle": "Переключить тему",
+    "back": "Назад",
+    "loading": "Загрузка..."
+  }
+}

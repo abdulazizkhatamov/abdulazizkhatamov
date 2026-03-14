@@ -1,26 +1,93 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ─── Dark mode via .dark class on <html> ─────────────────────────────────── */
+@custom-variant dark (&:where(.dark, .dark *));
 
+/* ─── Design tokens ───────────────────────────────────────────────────────── */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@theme {
+  /* Palette — light mode */
+  --color-bg:          #ffffff;
+  --color-surface:     #f4f4f6;
+  --color-border:      #e2e2e8;
+  --color-text:        #0d0d10;
+  --color-muted:       #71717a;
+
+  /* Palette — dark mode */
+  --color-bg-dark:     #0d0d10;
+  --color-surface-dark:#18181c;
+  --color-border-dark: #2a2a32;
+  --color-text-dark:   #f0f0f4;
+  --color-muted-dark:  #71717a;
+
+  /* Accent — electric indigo-blue */
+  --color-accent:         oklch(0.50 0.24 260);
+  --color-accent-hover:   oklch(0.43 0.26 260);
+  --color-accent-subtle:  oklch(0.50 0.24 260 / 8%);
+
+  --color-accent-dark:        oklch(0.65 0.22 260);
+  --color-accent-dark-hover:  oklch(0.71 0.20 260);
+  --color-accent-dark-subtle: oklch(0.65 0.22 260 / 10%);
+
+  /* Radius scale */
+  --radius-sm:  4px;
+  --radius-md:  8px;
+  --radius-lg:  12px;
+  --radius-xl:  16px;
+  --radius-2xl: 24px;
+
+  /* Transitions */
+  --transition-base: 150ms ease;
+}
+
+/* ─── Base styles ─────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+.dark body {
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-dark);
+}
+
+/* ─── Scrollbar ───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-muted);
+  border-radius: 999px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: var(--color-border-dark);
+}
+
+/* ─── Selection ───────────────────────────────────────────────────────────── */
+::selection {
+  background-color: var(--color-accent-subtle);
+  color: var(--color-accent);
+}
+.dark ::selection {
+  background-color: var(--color-accent-dark-subtle);
+  color: var(--color-accent-dark);
 }
