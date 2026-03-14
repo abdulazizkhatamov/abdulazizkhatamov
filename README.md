@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Abdulaziz Hatamov
 
-## Getting Started
+Frontend Developer with 4+ years of experience building production-grade web applications. I specialize in the React/TypeScript ecosystem — scalable component architecture, real-time interfaces, and performance-focused development across SSR, SSG, and SPA patterns.
 
-First, run the development server:
+Currently based in Fergana, Uzbekistan. Available for freelance and contract work.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Core** — JavaScript (ES2022+), TypeScript, HTML5, CSS3
+**Frontend** — React, Next.js, Redux Toolkit, Zustand, TanStack Query, Vite
+**UI** — Tailwind CSS, Shadcn UI, Radix UI, Mantine, Framer Motion
+**Backend** — Node.js, NestJS, Prisma, PostgreSQL, MongoDB, Redis
+**APIs** — REST, WebSockets, Stripe, GraphQL
+**DevOps** — GitHub Actions, Docker, Ubuntu VPS, Nginx, Cloudflare R2
+**Testing** — Jest, Vitest, React Testing Library
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Selected Work
 
-To learn more about Next.js, take a look at the following resources:
+**[Nordfiord](https://nordfiord.com)** — Full ecommerce platform built independently. Next.js 15 App Router storefront, React 19 admin panel with analytics dashboard, NestJS REST API. Stripe checkout, role-based access control, Cloudflare R2 image delivery.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Contact
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Email: [abdulazizkhatamov@hotmail.com](mailto:abdulazizkhatamov@hotmail.com)
+- Telegram: [@abdulaziz_khatamov](https://t.me/abdulaziz_khatamov)
+- Portfolio: [abdulazizkhatamov.vercel.app](https://abdulazizkhatamov.vercel.app)
