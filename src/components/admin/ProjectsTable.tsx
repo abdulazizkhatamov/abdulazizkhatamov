@@ -150,10 +150,10 @@ export default function ProjectsTable({ projects }: { projects: Project[] }) {
               <Field label="Slug" value={editing.slug ?? ""} onChange={(v) => set("slug", v)} />
               <Field label="Title" value={editing.title ?? ""} onChange={(v) => set("title", v)} />
               <Field label="Description" value={editing.description ?? ""} onChange={(v) => set("description", v)} textarea rows={3} />
-              <Field
+              <ArrayField
                 label="Tech Stack (comma separated)"
-                value={(editing.techStack as string[] ?? []).join(", ")}
-                onChange={(v) => set("techStack", v.split(",").map((s) => s.trim()).filter(Boolean))}
+                initial={(editing.techStack as string[] ?? []).join(", ")}
+                onChange={(arr) => set("techStack", arr)}
               />
               <div className="grid grid-cols-2 gap-3">
                 <Field label="Live URL" value={editing.liveUrl ?? ""} onChange={(v) => set("liveUrl", v)} />
@@ -189,54 +189,13 @@ export default function ProjectsTable({ projects }: { projects: Project[] }) {
                 <p className="text-xs text-(--color-muted) dark:text-(--color-muted-dark)">No repos yet.</p>
               )}
               {details.repos.map((repo, i) => (
-                <div key={i} className="flex flex-col gap-3 rounded-xl border border-(--color-border) dark:border-(--color-border-dark) p-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold text-(--color-text) dark:text-(--color-text-dark)">
-                      Repo {i + 1}{repo.name ? ` — ${repo.name}` : ""}
-                    </span>
-                    <button
-                      onClick={() => removeRepo(i)}
-                      className="text-xs text-red-500 hover:underline"
-                    >
-                      Remove
-                    </button>
-                  </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    <Field
-                      label="Name"
-                      value={repo.name}
-                      onChange={(v) => setRepo(i, { ...repo, name: v })}
-                    />
-                    <Field
-                      label="Subtitle"
-                      value={repo.subtitle}
-                      onChange={(v) => setRepo(i, { ...repo, subtitle: v })}
-                    />
-                  </div>
-                  <Field
-                    label="Description"
-                    value={repo.description}
-                    onChange={(v) => setRepo(i, { ...repo, description: v })}
-                    textarea
-                    rows={3}
-                  />
-                  <Field
-                    label="Tech Stack (comma separated)"
-                    value={repo.techStack.join(", ")}
-                    onChange={(v) =>
-                      setRepo(i, { ...repo, techStack: v.split(",").map((s) => s.trim()).filter(Boolean) })
-                    }
-                  />
-                  <Field
-                    label="Highlights (one per line)"
-                    value={repo.highlights.join("\n")}
-                    onChange={(v) =>
-                      setRepo(i, { ...repo, highlights: v.split("\n").map((s) => s.trim()).filter(Boolean) })
-                    }
-                    textarea
-                    rows={5}
-                  />
-                </div>
+                <RepoEditor
+                  key={i}
+                  index={i}
+                  repo={repo}
+                  onChange={(r) => setRepo(i, r)}
+                  onRemove={() => removeRepo(i)}
+                />
               ))}
             </Section>
 
@@ -285,6 +244,115 @@ export default function ProjectsTable({ projects }: { projects: Project[] }) {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+function RepoEditor({
+  index,
+  repo,
+  onChange,
+  onRemove,
+}: {
+  index: number;
+  repo: Repo;
+  onChange: (r: Repo) => void;
+  onRemove: () => void;
+}) {
+  return (
+    <div className="flex flex-col gap-3 rounded-xl border border-(--color-border) dark:border-(--color-border-dark) p-4">
+      <div className="flex items-center justify-between">
+        <span className="text-sm font-semibold text-(--color-text) dark:text-(--color-text-dark)">
+          Repo {index + 1}{repo.name ? ` — ${repo.name}` : ""}
+        </span>
+        <button onClick={onRemove} className="text-xs text-red-500 hover:underline">
+          Remove
+        </button>
+      </div>
+      <div className="grid grid-cols-2 gap-3">
+        <Field label="Name" value={repo.name} onChange={(v) => onChange({ ...repo, name: v })} />
+        <Field label="Subtitle" value={repo.subtitle} onChange={(v) => onChange({ ...repo, subtitle: v })} />
+      </div>
+      <Field
+        label="Description"
+        value={repo.description}
+        onChange={(v) => onChange({ ...repo, description: v })}
+        textarea
+        rows={3}
+      />
+      <ArrayField
+        label="Tech Stack (comma separated)"
+        initial={repo.techStack.join(", ")}
+        onChange={(arr) => onChange({ ...repo, techStack: arr })}
+      />
+      <LinesField
+        label="Highlights (one per line)"
+        initial={repo.highlights.join("\n")}
+        onChange={(arr) => onChange({ ...repo, highlights: arr })}
+        rows={5}
+      />
+    </div>
+  );
+}
+
+// Keeps raw comma-separated string in local state so typing isn't disrupted.
+// Parses to string[] and calls onChange on every keystroke (for save consistency),
+// but the displayed value is always the raw string the user typed.
+function ArrayField({
+  label,
+  initial,
+  onChange,
+}: {
+  label: string;
+  initial: string;
+  onChange: (arr: string[]) => void;
+}) {
+  const [raw, setRaw] = useState(initial);
+  const cls =
+    "h-9 w-full rounded-md border border-(--color-border) dark:border-(--color-border-dark) bg-(--color-surface) dark:bg-(--color-surface-dark) px-3 py-2 text-sm text-(--color-text) dark:text-(--color-text-dark) focus:outline-none focus:border-(--color-accent) dark:focus:border-(--color-accent-dark) transition-colors";
+  return (
+    <div className="flex flex-col gap-1">
+      <label className="text-xs font-medium text-(--color-muted) dark:text-(--color-muted-dark)">{label}</label>
+      <input
+        type="text"
+        value={raw}
+        onChange={(e) => {
+          setRaw(e.target.value);
+          onChange(e.target.value.split(",").map((s) => s.trim()).filter(Boolean));
+        }}
+        className={cls}
+      />
+    </div>
+  );
+}
+
+// Keeps raw newline-separated string in local state so pressing Enter isn't disrupted.
+function LinesField({
+  label,
+  initial,
+  onChange,
+  rows,
+}: {
+  label: string;
+  initial: string;
+  onChange: (arr: string[]) => void;
+  rows?: number;
+}) {
+  const [raw, setRaw] = useState(initial);
+  const cls =
+    "w-full rounded-md border border-(--color-border) dark:border-(--color-border-dark) bg-(--color-surface) dark:bg-(--color-surface-dark) px-3 py-2 text-sm text-(--color-text) dark:text-(--color-text-dark) focus:outline-none focus:border-(--color-accent) dark:focus:border-(--color-accent-dark) transition-colors resize-none";
+  return (
+    <div className="flex flex-col gap-1">
+      <label className="text-xs font-medium text-(--color-muted) dark:text-(--color-muted-dark)">{label}</label>
+      <textarea
+        value={raw}
+        rows={rows ?? 3}
+        onChange={(e) => {
+          setRaw(e.target.value);
+          onChange(e.target.value.split("\n").map((s) => s.trim()).filter(Boolean));
+        }}
+        className={cls}
+      />
     </div>
   );
 }
