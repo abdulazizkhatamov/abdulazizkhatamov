@@ -1,8 +1,8 @@
 # Abdulaziz Hatamov
 
-Software Engineer with 4+ years of experience building production-grade web applications. I specialize in the React/Next.js/NestJS/TypeScript ecosystem — scalable component architecture, real-time interfaces, database, RestAPI and performance-focused development across SSR, SSG, and SPA patterns.
+Full-stack engineer focused on building production-grade web applications with React, Next.js, NestJS, and TypeScript. I work across the full stack — from component architecture and real-time interfaces on the frontend to REST APIs, databases, and server infrastructure on the backend.
 
-Currently based in Fergana, Uzbekistan. Available for freelance and contract work.
+Based in Fergana, Uzbekistan. Available for freelance and contract work.
 
 ---
 
@@ -21,6 +21,8 @@ Currently based in Fergana, Uzbekistan. Available for freelance and contract wor
 ## Selected Work
 
 **[Nordfiord](https://nordfiord.com)** — Full ecommerce platform built independently. Next.js 15 App Router storefront, React 19 admin panel with analytics dashboard, NestJS REST API. Stripe checkout, role-based access control, Cloudflare R2 image delivery.
+
+**[expcli](https://github.com/abdulazizkhatamov/expcli)** — Open source CLI for scaffolding and managing Express + TypeScript projects. Published on npm as [expcli-ts](https://www.npmjs.com/package/expcli-ts). Generates projects from templates, scaffolds feature modules, and wires in integrations (databases, auth, testing, logging, docs, security) with a single command.
 
 ---
 
