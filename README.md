@@ -1,6 +1,6 @@
 # Abdulaziz Hatamov
 
-Frontend Developer with 4+ years of experience building production-grade web applications. I specialize in the React/TypeScript ecosystem — scalable component architecture, real-time interfaces, and performance-focused development across SSR, SSG, and SPA patterns.
+Software Engineer with 4+ years of experience building production-grade web applications. I specialize in the React/Next.js/NestJS/TypeScript ecosystem — scalable component architecture, real-time interfaces, database, RestAPI and performance-focused development across SSR, SSG, and SPA patterns.
 
 Currently based in Fergana, Uzbekistan. Available for freelance and contract work.
 
