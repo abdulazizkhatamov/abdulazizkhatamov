@@ -9,15 +9,15 @@
   },
   "hero": {
     "greeting": "Salom, men",
-    "role": "Frontend Dasturchi",
-    "tagline": "React va TypeScript yordamida tez, qulay va ishlab chiqarishga tayyor veb-ilovalar yarataman.",
+    "role": "Full Stack Dasturchi",
+    "tagline": "Ma'lumotlar bazasidan UI gacha — Node.js, React va TypeScript yordamida to'liq veb-mahsulotlar yarataman.",
     "cta_projects": "Loyihalarni ko'rish",
     "cta_cv": "CV ni ochish",
     "available": "Ish imkoniyatlariga ochiqman"
   },
   "about": {
     "title": "Men haqimda",
-    "bio": "4 yildan ortiq tajribaga ega Frontend Dasturchi. React va TypeScript ekotizimida chuqur bilimga ega — kengaytiriladigan komponent arxitekturasi, real vaqt interfeyslari, API integratsiyalari va ishlash samaradorligiga yo'naltirilgan ishlanmalar.",
+    "bio": "4 yildan ortiq tajribaga ega Full Stack Dasturchi. Butun stek bo'ylab ishlayman — NestJS REST API-lari, PostgreSQL va MongoDB ma'lumotlar bazalari va React/Next.js frontendlari — mustaqil yoki jamoada to'liq mahsulotlar yarataman.",
     "location": "Farg'ona, O'zbekiston",
     "experience": "4+ yil",
     "label_location": "Joylashuv",

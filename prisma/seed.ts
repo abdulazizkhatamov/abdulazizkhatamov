@@ -78,7 +78,7 @@ async function main() {
   await prisma.experience.create({
     data: {
       company: "Freelance & Contract",
-      role: "Middle Frontend Developer",
+      role: "Middle Full Stack Developer",
       location: "Remote",
       startDate: new Date("2023-01-01"),
       endDate: null,

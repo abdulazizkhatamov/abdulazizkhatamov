@@ -9,15 +9,15 @@
   },
   "hero": {
     "greeting": "Hi, I'm",
-    "role": "Frontend Developer",
-    "tagline": "I build fast, accessible, and production-ready web applications with React and TypeScript.",
+    "role": "Full Stack Developer",
+    "tagline": "I design and ship complete web products — from database to UI — with Node.js, React, and TypeScript.",
     "cta_projects": "View Projects",
     "cta_cv": "Open CV",
     "available": "Open to opportunities"
   },
   "about": {
     "title": "About Me",
-    "bio": "Frontend Developer with 4+ years of experience building and shipping production web applications. Deep expertise in the React and TypeScript ecosystem — scalable component architecture, real-time interfaces, API integrations, and performance-focused development.",
+    "bio": "Full Stack Developer with 4+ years of experience building and shipping end-to-end production applications. I work across the entire stack — NestJS REST APIs, PostgreSQL and MongoDB databases, and React/Next.js frontends — delivering complete products independently or in cross-functional teams.",
     "location": "Fergana, Uzbekistan",
     "experience": "4+ years",
     "label_location": "Location",
