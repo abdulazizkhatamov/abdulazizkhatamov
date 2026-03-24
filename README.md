@@ -24,6 +24,8 @@ Based in Fergana, Uzbekistan. Available for freelance and contract work.
 
 **[expcli](https://github.com/abdulazizkhatamov/expcli)** — Open source CLI for scaffolding and managing Express + TypeScript projects. Published on npm as [expcli-ts](https://www.npmjs.com/package/expcli-ts). Generates projects from templates, scaffolds feature modules, and wires in integrations (databases, auth, testing, logging, docs, security) with a single command.
 
+**[Dueflo](https://www.dueflo.com)** — AI-powered accounts receivable automation SaaS for US small businesses — connects to QuickBooks Online via OAuth, syncs overdue invoices, and automatically sends AI-written collection emails in a 6-step escalating sequence over 45 days. Built with Next.js 15, tRPC, Drizzle ORM, Supabase, Stripe, and the Claude API.
+
 ---
 
 ## Contact
