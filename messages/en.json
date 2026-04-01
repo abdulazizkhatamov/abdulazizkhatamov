@@ -44,15 +44,18 @@
     "title": "Projects",
     "featured_title": "Featured Projects",
     "view_all": "View all projects",
+    "view_details": "View Details",
     "live": "Live",
-    "source": "Source"
+    "source": "Source",
+    "empty": "No projects yet."
   },
   "blog": {
     "title": "Blog",
     "latest_title": "Latest Posts",
     "view_all": "Read all posts",
     "read_more": "Read more",
-    "min_read": "min read"
+    "min_read": "min read",
+    "empty": "No posts yet."
   },
   "contact": {
     "title": "Contact",

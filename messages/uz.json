@@ -44,15 +44,18 @@
     "title": "Loyihalar",
     "featured_title": "Tanlangan Loyihalar",
     "view_all": "Barcha loyihalarni ko'rish",
+    "view_details": "Batafsil",
     "live": "Sayt",
-    "source": "Kod"
+    "source": "Kod",
+    "empty": "Hali loyihalar yo'q."
   },
   "blog": {
     "title": "Blog",
     "latest_title": "So'nggi Maqolalar",
     "view_all": "Barcha maqolalarni o'qish",
     "read_more": "Ko'proq o'qish",
-    "min_read": "daq o'qish"
+    "min_read": "daq o'qish",
+    "empty": "Hali maqolalar yo'q."
   },
   "contact": {
     "title": "Aloqa",
