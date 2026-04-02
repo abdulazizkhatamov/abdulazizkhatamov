@@ -77,20 +77,6 @@ model Project {
   updatedAt   DateTime @updatedAt
 }
 
-model BlogPost {
-  id          String    @id @default(cuid())
-  title       String
-  slug        String    @unique
-  excerpt     String
-  content     Json
-  coverImage  String?
-  tags        String[]
-  published   Boolean   @default(false)
-  publishedAt DateTime?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-}
-
 model Skill {
   id       String @id @default(cuid())
   name     String

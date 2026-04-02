@@ -2,10 +2,9 @@ import prisma from "@/lib/prisma";
 import OpenToWorkToggle from "@/components/admin/OpenToWorkToggle";
 
 export default async function AdminDashboard() {
-  const [projectCount, postCount, unreadCount, messageCount, settings] =
+  const [projectCount, unreadCount, messageCount, settings] =
     await Promise.all([
       prisma.project.count(),
-      prisma.blogPost.count({ where: { published: true } }),
       prisma.message.count({ where: { read: false } }),
       prisma.message.count(),
       prisma.siteSettings.upsert({
@@ -17,7 +16,6 @@ export default async function AdminDashboard() {
 
   const stats = [
     { label: "Projects", value: projectCount },
-    { label: "Published Posts", value: postCount },
     { label: "Total Messages", value: messageCount },
     { label: "Unread Messages", value: unreadCount, accent: true },
   ];

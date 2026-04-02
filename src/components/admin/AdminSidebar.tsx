@@ -8,8 +8,7 @@ import { useRouter } from "next/navigation";
 const NAV = [
   { href: "/admin", label: "Dashboard", icon: "⊞" },
   { href: "/admin/projects", label: "Projects", icon: "◈" },
-  { href: "/admin/blog", label: "Blog", icon: "✦" },
-  { href: "/admin/skills", label: "Skills", icon: "◇" },
+{ href: "/admin/skills", label: "Skills", icon: "◇" },
   { href: "/admin/experience", label: "Experience", icon: "◉" },
   { href: "/admin/messages", label: "Messages", icon: "◎" },
 ];
@@ -27,7 +26,7 @@ export default function AdminSidebar() {
     <aside className="fixed left-0 top-0 h-full w-60 border-r border-(--color-border) dark:border-(--color-border-dark) bg-(--color-surface) dark:bg-(--color-surface-dark) flex flex-col">
       <div className="p-6 border-b border-(--color-border) dark:border-(--color-border-dark)">
         <Link href="/" className="text-sm font-bold text-(--color-text) dark:text-(--color-text-dark)">
-          AH<span className="text-(--color-accent) dark:text-(--color-accent-dark)">.</span>
+          abdulaziz<span className="text-(--color-accent) dark:text-(--color-accent-dark)">.cv</span>
           <span className="ml-2 text-xs font-normal text-(--color-muted) dark:text-(--color-muted-dark)">Admin</span>
         </Link>
       </div>
