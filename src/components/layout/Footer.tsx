@@ -12,7 +12,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="flex flex-col gap-1">
             <Link href="/" className="font-mono text-xs font-bold text-(--color-text) dark:text-(--color-text-dark) hover:text-(--color-accent) dark:hover:text-(--color-accent-dark) transition-colors tracking-widest uppercase">
-              AH<span className="text-(--color-accent) dark:text-(--color-accent-dark)">.cv</span>
+              abdulaziz<span className="text-(--color-accent) dark:text-(--color-accent-dark)">.cv</span>
             </Link>
             <p className="font-mono text-[10px] text-(--color-muted) dark:text-(--color-muted-dark) tracking-wider">
               {t("built_with")}

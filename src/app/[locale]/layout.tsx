@@ -7,7 +7,6 @@ import { routing } from "@/i18n/routing";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import NoiseOverlay from "@/components/ui/NoiseOverlay";
-import CustomCursor from "@/components/ui/CustomCursor";
 
 type Props = {
   children: React.ReactNode;
@@ -32,7 +31,6 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <NextIntlClientProvider messages={messages}>
-        <CustomCursor />
         <NoiseOverlay />
         <Navbar />
         <main>{children}</main>

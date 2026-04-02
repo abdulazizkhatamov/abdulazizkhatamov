@@ -44,13 +44,11 @@ export default function Navbar() {
       >
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 sm:px-12 h-16">
           {/* Logo */}
-          <Link href="/" className="group flex items-baseline gap-px">
-            <span className="font-mono text-sm font-black tracking-tight text-(--color-text) dark:text-(--color-text-dark) group-hover:text-(--color-accent) dark:group-hover:text-(--color-accent-dark) transition-colors duration-200">
-              AH
-            </span>
-            <span className="text-[10px] font-bold text-(--color-accent) dark:text-(--color-accent-dark) font-mono ml-0.5 opacity-80">
-              .cv
-            </span>
+          <Link
+            href="/"
+            className="font-mono text-xs font-bold tracking-widest uppercase text-(--color-text) dark:text-(--color-text-dark) hover:text-(--color-accent) dark:hover:text-(--color-accent-dark) transition-colors duration-200"
+          >
+            abdulaziz<span className="text-(--color-accent) dark:text-(--color-accent-dark)">.cv</span>
           </Link>
 
           {/* Desktop links */}
@@ -140,7 +138,7 @@ export default function Navbar() {
                     </span>
                     <span
                       className="font-black text-(--color-text) dark:text-(--color-text-dark) group-hover:text-(--color-accent) dark:group-hover:text-(--color-accent-dark) transition-colors duration-200 tracking-tight"
-                      style={{ fontSize: "clamp(1.8rem, 7vw, 3rem)" }}
+                      style={{ fontSize: "clamp(1.6rem, 6vw, 3rem)" }}
                     >
                       {link.label}
                     </span>

@@ -97,8 +97,8 @@ export default function AboutSection() {
       {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 sm:gap-10">
         <StatCounter value={4}  suffix="+" label={t("label_experience")} delay={0} />
-        <StatCounter value={20} suffix="+" label="Projects"              delay={0.06} />
-        <StatCounter value={3}  suffix=""  label={t("label_languages")}  delay={0.12} />
+        <StatCounter value={12} suffix="+" label="Projects Delivered"    delay={0.06} />
+        <StatCounter value={15} suffix="+" label="Technologies"          delay={0.12} />
 
         <motion.div
           initial={{ opacity: 0, y: 14 }}
@@ -108,9 +108,9 @@ export default function AboutSection() {
         >
           <div
             className="font-black text-(--color-text) dark:text-(--color-text-dark) leading-none"
-            style={{ fontSize: "clamp(1.5rem, 3vw, 2rem)" }}
+            style={{ fontSize: "clamp(1.4rem, 3vw, 1.9rem)" }}
           >
-            Tashkent
+            Fergana
           </div>
           <div className="font-mono text-[11px] uppercase tracking-[0.24em] text-(--color-muted) dark:text-(--color-muted-dark)">
             {t("label_location")}

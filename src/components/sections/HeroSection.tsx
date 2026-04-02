@@ -54,7 +54,7 @@ export default function HeroSection({ openToWork }: { openToWork: boolean }) {
   return (
     <motion.section
       ref={ref}
-      className="relative min-h-screen flex flex-col px-6 sm:px-12 lg:px-20 pt-24 pb-10 overflow-hidden"
+      className="relative min-h-[100svh] flex flex-col px-5 sm:px-12 lg:px-20 pt-20 pb-8 overflow-hidden"
       style={{ opacity }}
     >
       {/* Subtle grid texture */}
@@ -110,7 +110,7 @@ export default function HeroSection({ openToWork }: { openToWork: boolean }) {
       <motion.div style={{ y: contentY }} className="flex-1 flex flex-col justify-center py-10 lg:py-16">
         <h1
           className="font-black leading-[0.85] tracking-[-0.04em] select-none"
-          style={{ fontSize: "clamp(4.5rem, 13.5vw, 12rem)" }}
+          style={{ fontSize: "clamp(2.6rem, 11vw, 12rem)" }}
         >
           <CharReveal
             text="ABDULAZIZ"
