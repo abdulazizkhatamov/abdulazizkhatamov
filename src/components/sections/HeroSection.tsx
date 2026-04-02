@@ -110,7 +110,7 @@ export default function HeroSection({ openToWork }: { openToWork: boolean }) {
       <motion.div style={{ y: contentY }} className="flex-1 flex flex-col justify-center py-10 lg:py-16">
         <h1
           className="font-black leading-[0.85] tracking-[-0.04em] select-none"
-          style={{ fontSize: "clamp(2.6rem, 11vw, 12rem)" }}
+          style={{ fontSize: "clamp(1.9rem, 10.5vw, 12rem)" }}
         >
           <CharReveal
             text="ABDULAZIZ"
