@@ -16,21 +16,19 @@ export default function ExperienceSection({ experience }: Props) {
     <SectionWrapper id="experience">
       <SectionLabel number="04" label={t("title")} />
 
-      <div className="mt-12 flex flex-col gap-4">
+      <div className="relative flex flex-col">
+        {/* Vertical timeline line */}
+        <div className="absolute left-[5.5rem] top-0 bottom-0 w-px bg-(--color-border) dark:bg-(--color-border-dark) hidden sm:block" />
+
         {experience.map((item, index) => (
-          <ExperienceCard
-            key={item.id}
-            item={item}
-            index={index}
-            present={t("present")}
-          />
+          <TimelineItem key={item.id} item={item} index={index} present={t("present")} />
         ))}
       </div>
     </SectionWrapper>
   );
 }
 
-function ExperienceCard({
+function TimelineItem({
   item,
   index,
   present,
@@ -40,66 +38,84 @@ function ExperienceCard({
   present: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
+  const inView = useInView(ref, { once: true, margin: "-50px" });
 
   const startYear = new Date(item.startDate).getFullYear();
   const endYear = item.current
     ? present
     : item.endDate
-    ? new Date(item.endDate).getFullYear()
+    ? new Date(item.endDate).getFullYear().toString()
     : "";
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 32 }}
+      initial={{ opacity: 0, y: 24 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ delay: index * 0.1, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={{ y: -2 }}
-      className="group relative rounded-(--radius-2xl) border border-(--color-border) dark:border-(--color-border-dark) bg-(--color-surface) dark:bg-(--color-surface-dark) p-6 sm:p-8 hover:border-(--color-accent)/30 dark:hover:border-(--color-accent-dark)/25 transition-all duration-300 hover:shadow-xl hover:shadow-(--color-accent)/5 dark:hover:shadow-(--color-accent-dark)/8 overflow-hidden"
+      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+      className="flex flex-col sm:flex-row gap-4 sm:gap-8 pb-12 last:pb-0"
     >
-      {/* Gradient top line on hover */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-(--color-accent) dark:from-(--color-accent-dark) to-(--color-accent-2) dark:to-(--color-accent-2-dark) opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-        <div className="flex flex-col gap-1">
-          {/* Role */}
-          <h3 className="text-lg sm:text-xl font-bold text-(--color-text) dark:text-(--color-text-dark)">
-            {item.role}
-          </h3>
-          {/* Company */}
-          <p className="text-base font-semibold text-(--color-accent) dark:text-(--color-accent-dark)">
-            {item.company}
-          </p>
-          {/* Location */}
-          {item.location && (
-            <p className="text-sm text-(--color-muted) dark:text-(--color-muted-dark) flex items-center gap-1.5">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-                <circle cx="12" cy="10" r="3" />
-              </svg>
-              {item.location}
-            </p>
-          )}
-        </div>
-
-        {/* Date badge */}
-        <span className="shrink-0 inline-flex items-center rounded-full border border-(--color-border) dark:border-(--color-border-dark) bg-(--color-bg) dark:bg-(--color-bg-dark) px-4 py-1.5 text-xs font-bold text-(--color-muted) dark:text-(--color-muted-dark) font-mono tracking-wide whitespace-nowrap">
-          {startYear} — {endYear}
+      {/* Year column */}
+      <div className="shrink-0 sm:w-20 flex sm:flex-col sm:items-end gap-2 sm:gap-0.5 pt-1">
+        <span className="font-mono text-xs font-bold text-(--color-accent) dark:text-(--color-accent-dark) tabular-nums">
+          {startYear}
+        </span>
+        <span className="font-mono text-[10px] text-(--color-muted) dark:text-(--color-muted-dark) sm:block hidden">↓</span>
+        <span className="font-mono text-xs font-bold text-(--color-muted) dark:text-(--color-muted-dark) tabular-nums sm:block hidden">
+          {endYear}
+        </span>
+        <span className="font-mono text-xs text-(--color-muted) dark:text-(--color-muted-dark) sm:hidden">
+          — {endYear}
         </span>
       </div>
 
-      {/* Bullets */}
-      {item.bullets.length > 0 && (
-        <ul className="mt-5 flex flex-col gap-2.5 border-t border-(--color-border) dark:border-(--color-border-dark) pt-5">
-          {item.bullets.map((bullet: string, i: number) => (
-            <li key={i} className="flex gap-3 text-sm text-(--color-muted) dark:text-(--color-muted-dark) leading-relaxed">
-              <span className="mt-[8px] h-1.5 w-1.5 shrink-0 rounded-full bg-(--color-accent) dark:bg-(--color-accent-dark)" />
-              {bullet}
-            </li>
-          ))}
-        </ul>
-      )}
+      {/* Timeline dot */}
+      <div className="relative hidden sm:flex items-start justify-center w-4 shrink-0 pt-1.5">
+        <div className="h-2 w-2 rounded-full bg-(--color-accent) dark:bg-(--color-accent-dark)" />
+      </div>
+
+      {/* Content */}
+      <div className="flex-1 pb-4">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 sm:gap-4">
+          <div>
+            <h3 className="text-base font-bold text-(--color-text) dark:text-(--color-text-dark) leading-tight">
+              {item.role}
+            </h3>
+            <p className="text-sm font-semibold text-(--color-accent) dark:text-(--color-accent-dark) mt-0.5">
+              {item.company}
+            </p>
+            {item.location && (
+              <p className="text-xs text-(--color-muted) dark:text-(--color-muted-dark) mt-0.5 font-mono">
+                {item.location}
+              </p>
+            )}
+          </div>
+
+          {item.current && (
+            <span
+              className="shrink-0 inline-flex items-center gap-1.5 border border-(--color-accent)/30 dark:border-(--color-accent-dark)/25 bg-(--color-accent-subtle) dark:bg-(--color-accent-dark-subtle) px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-(--color-accent) dark:text-(--color-accent-dark)"
+              style={{ borderRadius: "var(--radius-sm)" }}
+            >
+              <span className="pulse-dot h-1 w-1 rounded-full bg-(--color-accent) dark:bg-(--color-accent-dark)" />
+              {present}
+            </span>
+          )}
+        </div>
+
+        {item.bullets.length > 0 && (
+          <ul className="mt-4 flex flex-col gap-2">
+            {item.bullets.map((bullet: string, i: number) => (
+              <li
+                key={i}
+                className="flex gap-3 text-sm text-(--color-muted) dark:text-(--color-muted-dark) leading-relaxed"
+              >
+                <span className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-(--color-accent) dark:bg-(--color-accent-dark)" />
+                {bullet}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </motion.div>
   );
 }

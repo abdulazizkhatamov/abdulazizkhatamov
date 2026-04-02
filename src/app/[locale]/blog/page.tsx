@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import BlogCard from "@/components/blog/BlogCard";
 import prisma from "@/lib/prisma";
+import { breadcrumbJsonLd } from "@/lib/jsonld";
 
 const BASE_URL = "https://abdulaziz.cv";
 
@@ -25,11 +26,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const t = await getTranslations({ locale, namespace: "blog" });
 
   const title = t("title");
-  const description = "Articles on frontend development, React, TypeScript, and modern web engineering by Abdulaziz Hatamov.";
+  const description =
+    "Articles on frontend development, React, TypeScript, and modern web engineering by Abdulaziz Hatamov.";
 
   return {
     title,
     description,
+    keywords: [
+      "web development blog",
+      "frontend articles",
+      "React tutorials",
+      "TypeScript",
+      "Next.js",
+      "JavaScript",
+      "Abdulaziz Hatamov",
+    ],
     alternates: {
       canonical: `${BASE_URL}/${locale}/blog`,
       languages: {
@@ -43,11 +54,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       url: `${BASE_URL}/${locale}/blog`,
+      type: "website",
     },
-    twitter: {
-      title,
-      description,
-    },
+    twitter: { title, description },
   };
 }
 
@@ -68,7 +77,20 @@ export default async function BlogPage({ params }: Props) {
     },
   });
 
-  return <BlogContent posts={posts} />;
+  const ldBreadcrumb = breadcrumbJsonLd([
+    { name: "Home", item: `${BASE_URL}/${locale}` },
+    { name: "Blog", item: `${BASE_URL}/${locale}/blog` },
+  ]);
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ldBreadcrumb) }}
+      />
+      <BlogContent posts={posts} />
+    </>
+  );
 }
 
 function BlogContent({ posts }: { posts: PostPreview[] }) {
@@ -76,21 +98,20 @@ function BlogContent({ posts }: { posts: PostPreview[] }) {
 
   return (
     <SectionWrapper className="pt-32">
-      {/* Page header */}
-      <div className="mb-12">
-        <div className="flex items-center gap-3 mb-5">
-          <span className="h-px w-8 bg-(--color-accent) dark:bg-(--color-accent-dark)" />
-          <span className="text-xs font-bold uppercase tracking-[0.2em] text-(--color-accent) dark:text-(--color-accent-dark)">
-            {t("title")}
-          </span>
-        </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-(--color-text) dark:text-(--color-text-dark)">
+      <div className="flex items-center gap-5 mb-14">
+        <span className="font-mono text-xs font-bold text-(--color-accent) dark:text-(--color-accent-dark) shrink-0">
+          05
+        </span>
+        <div className="flex-1 h-px bg-(--color-border) dark:bg-(--color-border-dark)" />
+        <h1 className="font-mono text-[11px] font-bold uppercase tracking-[0.3em] text-(--color-muted) dark:text-(--color-muted-dark) shrink-0">
           {t("title")}
         </h1>
       </div>
 
       {posts.length === 0 ? (
-        <p className="text-(--color-muted) dark:text-(--color-muted-dark)">{t("empty")}</p>
+        <p className="font-mono text-sm text-(--color-muted) dark:text-(--color-muted-dark)">
+          {t("empty")}
+        </p>
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (

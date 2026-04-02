@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import ContactForm from "@/components/sections/ContactForm";
+import { breadcrumbJsonLd } from "@/lib/jsonld";
 
 const BASE_URL = "https://abdulaziz.cv";
 
@@ -16,6 +17,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description,
+    keywords: [
+      "hire frontend developer",
+      "contact Abdulaziz Hatamov",
+      "freelance developer",
+      "React developer for hire",
+      "web development services",
+    ],
     alternates: {
       canonical: `${BASE_URL}/${locale}/contact`,
       languages: {
@@ -29,16 +37,28 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       url: `${BASE_URL}/${locale}/contact`,
+      type: "website",
     },
-    twitter: {
-      title,
-      description,
-    },
+    twitter: { title, description },
   };
 }
 
 export default async function ContactPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
-  return <ContactForm />;
+
+  const ldBreadcrumb = breadcrumbJsonLd([
+    { name: "Home", item: `${BASE_URL}/${locale}` },
+    { name: "Contact", item: `${BASE_URL}/${locale}/contact` },
+  ]);
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ldBreadcrumb) }}
+      />
+      <ContactForm />
+    </>
+  );
 }

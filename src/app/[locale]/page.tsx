@@ -10,6 +10,7 @@ import FeaturedProjects from "@/components/sections/FeaturedProjects";
 import LatestPosts from "@/components/sections/LatestPosts";
 import ContactCTA from "@/components/sections/ContactCTA";
 import prisma from "@/lib/prisma";
+import { personJsonLd, websiteJsonLd } from "@/lib/jsonld";
 
 const BASE_URL = "https://abdulaziz.cv";
 
@@ -26,6 +27,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description,
+    keywords: [
+      "Abdulaziz Hatamov",
+      "frontend developer",
+      "full stack developer",
+      "React",
+      "Next.js",
+      "TypeScript",
+      "NestJS",
+      "Node.js",
+      "PostgreSQL",
+      "web developer",
+      "portfolio",
+      "hire frontend developer",
+    ],
     alternates: {
       canonical: `${BASE_URL}/${locale}`,
       languages: {
@@ -42,6 +57,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: "profile",
       firstName: "Abdulaziz",
       lastName: "Hatamov",
+      username: "abdulazizkhatamov",
     },
     twitter: {
       title,
@@ -81,6 +97,14 @@ export default async function HomePage({ params }: Props) {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd(locale)) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd()) }}
+      />
       <HeroSection openToWork={settings?.openToWork ?? true} />
       <AboutSection />
       <SkillsSection skills={skills} />

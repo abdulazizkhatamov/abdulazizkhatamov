@@ -5,6 +5,7 @@ import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import prisma from "@/lib/prisma";
 import BlogPostContent from "@/components/blog/BlogPostContent";
+import { articleJsonLd, breadcrumbJsonLd } from "@/lib/jsonld";
 
 const BASE_URL = "https://abdulaziz.cv";
 
@@ -15,13 +16,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = await prisma.blogPost.findUnique({ where: { slug } });
   if (!post) return {};
 
-  const title = post.title;
-  const description = post.excerpt;
   const url = `${BASE_URL}/${locale}/blog/${slug}`;
 
   return {
-    title,
-    description,
+    title: post.title,
+    description: post.excerpt,
+    keywords: [
+      ...post.tags,
+      "web development",
+      "frontend",
+      "Abdulaziz Hatamov",
+    ],
     alternates: {
       canonical: url,
       languages: {
@@ -32,8 +37,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     },
     openGraph: {
-      title,
-      description,
+      title: post.title,
+      description: post.excerpt,
       url,
       type: "article",
       publishedTime: post.publishedAt?.toISOString(),
@@ -42,8 +47,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       tags: post.tags,
     },
     twitter: {
-      title,
-      description,
+      title: post.title,
+      description: post.excerpt,
     },
   };
 }
@@ -58,5 +63,33 @@ export default async function BlogPostPage({ params }: Props) {
 
   if (!post) notFound();
 
-  return <BlogPostContent post={post} />;
+  const ldArticle = articleJsonLd({
+    title: post.title,
+    description: post.excerpt,
+    publishedAt: post.publishedAt,
+    updatedAt: post.updatedAt,
+    slug,
+    locale,
+    tags: post.tags,
+  });
+
+  const ldBreadcrumb = breadcrumbJsonLd([
+    { name: "Home", item: `${BASE_URL}/${locale}` },
+    { name: "Blog", item: `${BASE_URL}/${locale}/blog` },
+    { name: post.title, item: `${BASE_URL}/${locale}/blog/${slug}` },
+  ]);
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ldArticle) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ldBreadcrumb) }}
+      />
+      <BlogPostContent post={post} />
+    </>
+  );
 }

@@ -78,42 +78,25 @@ async function main() {
   await prisma.experience.create({
     data: {
       company: "Freelance & Contract",
-      role: "Middle Full Stack Developer",
+      role: "Full Stack Developer",
       location: "Remote",
-      startDate: new Date("2023-01-01"),
+      startDate: new Date("2021-01-01"),
       endDate: null,
       current: true,
       order: 0,
       bullets: [
-        "Designed and shipped Nordfiord — a complete ecommerce platform across three production repositories (Next.js 15 storefront, React 19 + Vite admin panel, NestJS REST API), handling real Stripe payments, Redis-backed cart sessions with 7-day TTL, and direct Cloudflare R2 image uploads via presigned URLs.",
-        "Architected scalable frontend systems applying compound component patterns, custom hook layers, and design token systems — delivering reusable, maintainable codebases that scale cleanly across multiple client projects.",
-        "Built high-frequency real-time interfaces using WebSockets and TanStack Query, including a live admin dashboard with revenue analytics, 30-day time series charts, order status tracking, and low-stock alerts.",
-        "Established CI/CD pipelines with GitHub Actions covering automated type-checking, linting, builds, and zero-downtime SSH deployments to Ubuntu VPS — eliminating all manual deployment steps.",
-        "Delivered complete projects independently: translating client requirements into technical architecture, defining data models, integrating third-party services (Stripe, Resend, Cloudflare R2), and owning production deployments end-to-end.",
+        "Designed and delivered complete web applications using React, Next.js, and TypeScript on the frontend and NestJS with PostgreSQL and Redis on the backend — making architecture decisions independently from database schema to deployment.",
+        "Built RESTful APIs with NestJS and Prisma ORM, implementing role-based access control, session-based authentication, payment webhook handling, and background job scheduling.",
+        "Built responsive, accessible UIs with TailwindCSS, Shadcn UI, and Mantine UI; developed shared component libraries reused across multiple projects.",
+        "Integrated third-party services end-to-end: Stripe (Checkout, webhooks, subscription management), QuickBooks Online OAuth 2.0 with AES-256-GCM token encryption, Cloudflare R2 object storage, and Claude AI API.",
+        "Managed complex application state using TanStack Query for server-state synchronization and Zustand / Redux Toolkit for client state, keeping data flow predictable across large codebases.",
+        "Configured CI/CD pipelines via GitHub Actions, managed Ubuntu VPS deployments, and shipped to serverless platforms (Vercel, Supabase).",
+        "Delivered across multiple domains — ecommerce, SaaS, educational platforms, and data-heavy dashboards — consistently producing clean, maintainable code.",
       ],
     },
   });
 
-  await prisma.experience.create({
-    data: {
-      company: "RTM",
-      role: "Frontend Developer",
-      location: "Fergana, Uzbekistan",
-      startDate: new Date("2021-06-01"),
-      endDate: new Date("2023-05-01"),
-      current: false,
-      order: 1,
-      bullets: [
-        "Core contributor to an educational management platform serving multiple institutions — built modules for student records, grade management, financial operations, and administrative reporting used by hundreds of staff members daily.",
-        "Designed and implemented data-intensive React interfaces including multi-step forms, paginated tables with server-side filtering, and role-based dashboards — streamlining workflows that previously required manual processes.",
-        "Led systematic migration of legacy jQuery UI to a component-driven React architecture, establishing reusable patterns and reducing code duplication across the entire frontend codebase.",
-        "Integrated and consumed 15+ RESTful API endpoints across multiple business domains, implementing robust error handling, loading states, optimistic updates, and cache invalidation strategies with React Query.",
-        "Contributed to team engineering culture: participated in sprint planning and task breakdowns, conducted peer code reviews, documented component APIs, and supported junior developers in adopting React best practices.",
-      ],
-    },
-  });
-
-  console.log("✅ 2 experience entries seeded");
+  console.log("✅ 1 experience entry seeded");
 
   // ─── Nordfiord (single combined project) ─────────────────────────────────
   await prisma.project.create({

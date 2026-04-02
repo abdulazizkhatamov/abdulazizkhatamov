@@ -11,16 +11,16 @@ type Props = {
 
 export default function SectionWrapper({ id, children, className }: Props) {
   const ref = useRef<HTMLElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
     <motion.section
       ref={ref}
       id={id}
-      initial={{ opacity: 0, y: 48 }}
+      initial={{ opacity: 0, y: 36 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-      className={`mx-auto max-w-6xl px-6 sm:px-12 py-24 ${className ?? ""}`}
+      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      className={`mx-auto max-w-7xl px-6 sm:px-12 lg:px-20 py-24 ${className ?? ""}`}
     >
       {children}
     </motion.section>

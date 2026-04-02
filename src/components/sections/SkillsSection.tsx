@@ -1,83 +1,80 @@
 "use client";
 
+import { useRef } from "react";
 import { useTranslations } from "next-intl";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import { SectionLabel } from "./AboutSection";
 import type { Skill } from "@/generated/prisma/client";
 
 type Props = { skills: Skill[] };
 
-const CATEGORY_ORDER = ["Core", "Frontend", "UI", "Backend", "APIs", "DevOps", "Testing"];
+const CATEGORIES = ["Core", "Frontend", "UI", "Backend", "APIs", "DevOps", "Testing"];
 
 export default function SkillsSection({ skills }: Props) {
   const t = useTranslations("skills");
 
-  const all = CATEGORY_ORDER.flatMap((cat) =>
-    skills.filter((s) => s.category === cat)
-  );
-
-  const mid = Math.ceil(all.length / 2);
-  const row1 = all.slice(0, mid);
-  const row2 = all.slice(mid);
+  const grouped = CATEGORIES.map((cat) => ({
+    category: cat,
+    items: skills.filter((s) => s.category === cat),
+  })).filter((g) => g.items.length > 0);
 
   return (
     <SectionWrapper id="skills">
       <SectionLabel number="03" label={t("title")} />
 
-      <div className="mt-12 flex flex-col gap-4 overflow-hidden">
-        {/* Row 1 — scrolls left */}
-        <MarqueeRow items={row1} direction="left" />
-        {/* Row 2 — scrolls right */}
-        <MarqueeRow items={row2} direction="right" />
+      <div className="flex flex-col">
+        {grouped.map((group, gi) => (
+          <SkillRow key={group.category} category={group.category} items={group.items} index={gi} />
+        ))}
       </div>
-
-      {/* Gradient fade edges */}
     </SectionWrapper>
   );
 }
 
-function MarqueeRow({
+function SkillRow({
+  category,
   items,
-  direction,
+  index,
 }: {
+  category: string;
   items: Skill[];
-  direction: "left" | "right";
+  index: number;
 }) {
-  if (items.length === 0) return null;
-  const doubled = [...items, ...items, ...items];
-  const xStart = direction === "left" ? "0%" : "-33.33%";
-  const xEnd   = direction === "left" ? "-33.33%" : "0%";
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-40px" });
 
   return (
-    <div className="relative overflow-hidden py-1">
-      {/* Fade edges */}
-      <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-24 z-10"
-        style={{ background: "linear-gradient(to right, var(--color-bg), transparent)" }} />
-      <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-24 z-10"
-        style={{ background: "linear-gradient(to left, var(--color-bg), transparent)" }} />
-
-      <motion.div
-        animate={{ x: [xStart, xEnd] }}
-        transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
-        className="flex gap-3 w-max"
-      >
-        {doubled.map((skill, i) => (
-          <SkillChip key={`${skill.id}-${i}`} name={skill.name} />
-        ))}
-      </motion.div>
-    </div>
-  );
-}
-
-function SkillChip({ name }: { name: string }) {
-  return (
-    <motion.span
-      whileHover={{ y: -3, scale: 1.06 }}
-      transition={{ duration: 0.18, ease: "easeOut" }}
-      className="inline-flex items-center rounded-full border border-(--color-border) dark:border-(--color-border-dark) bg-(--color-surface) dark:bg-(--color-surface-dark) px-4 py-2 text-sm font-medium text-(--color-text) dark:text-(--color-text-dark) cursor-default select-none whitespace-nowrap hover:border-(--color-accent)/50 dark:hover:border-(--color-accent-dark)/40 hover:bg-(--color-accent-subtle) dark:hover:bg-(--color-accent-dark-subtle) hover:text-(--color-accent) dark:hover:text-(--color-accent-dark) transition-colors"
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, x: -20 }}
+      animate={inView ? { opacity: 1, x: 0 } : {}}
+      transition={{ duration: 0.55, delay: index * 0.07, ease: [0.16, 1, 0.3, 1] }}
+      className="flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-8 py-6 border-b border-(--color-border) dark:border-(--color-border-dark) first:border-t"
     >
-      {name}
-    </motion.span>
+      {/* Category label */}
+      <div className="shrink-0 sm:w-28">
+        <span className="font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-(--color-accent) dark:text-(--color-accent-dark)">
+          {category}
+        </span>
+      </div>
+
+      {/* Skill tags */}
+      <div className="flex flex-wrap gap-2">
+        {items.map((skill, si) => (
+          <motion.span
+            key={skill.id}
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={inView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.3, delay: index * 0.07 + si * 0.04 }}
+            whileHover={{ y: -2 }}
+            className="inline-flex items-center border border-(--color-border) dark:border-(--color-border-dark) bg-(--color-surface) dark:bg-(--color-surface-dark) px-3.5 py-1.5 text-sm font-medium text-(--color-text) dark:text-(--color-text-dark) hover:border-(--color-accent) dark:hover:border-(--color-accent-dark) hover:text-(--color-accent) dark:hover:text-(--color-accent-dark) transition-colors select-none"
+            style={{ borderRadius: "var(--radius-sm)" }}
+          >
+            {skill.name}
+          </motion.span>
+        ))}
+      </div>
+    </motion.div>
   );
 }

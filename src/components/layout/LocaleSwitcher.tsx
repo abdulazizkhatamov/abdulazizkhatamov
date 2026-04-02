@@ -3,8 +3,6 @@
 import { useLocale } from "next-intl";
 import { useRouter, usePathname } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
-import { motion } from "framer-motion";
-
 const LOCALE_LABELS: Record<string, string> = {
   en: "EN",
   uz: "UZ",
@@ -26,25 +24,14 @@ export default function LocaleSwitcher() {
         <button
           key={loc}
           onClick={() => handleChange(loc)}
-          className="relative px-2.5 py-1.5 text-xs font-semibold rounded-(--radius-sm) transition-colors"
+          className={[
+            "relative px-2.5 py-1.5 text-xs font-semibold rounded-(--radius-sm) transition-colors duration-200",
+            loc === locale
+              ? "bg-(--color-accent) dark:bg-(--color-accent-dark) text-white dark:text-(--color-bg-dark)"
+              : "text-(--color-muted) dark:text-(--color-muted-dark) hover:text-(--color-text) dark:hover:text-(--color-text-dark)",
+          ].join(" ")}
         >
-          {loc === locale && (
-            <motion.span
-              layoutId="locale-pill"
-              className="absolute inset-0 rounded-(--radius-sm) bg-(--color-accent) dark:bg-(--color-accent-dark)"
-              transition={{ type: "spring", bounce: 0.2, duration: 0.35 }}
-            />
-          )}
-          <span
-            className={[
-              "relative z-10 transition-colors",
-              loc === locale
-                ? "text-white dark:text-(--color-bg-dark)"
-                : "text-(--color-muted) dark:text-(--color-muted-dark) hover:text-(--color-text) dark:hover:text-(--color-text-dark)",
-            ].join(" ")}
-          >
-            {LOCALE_LABELS[loc]}
-          </span>
+          {LOCALE_LABELS[loc]}
         </button>
       ))}
     </div>

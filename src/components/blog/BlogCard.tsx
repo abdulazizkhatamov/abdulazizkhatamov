@@ -1,10 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { useMotionValue, useSpring, useTransform } from "framer-motion";
 
 type PostPreview = {
   id: string;
@@ -17,53 +16,38 @@ type PostPreview = {
 
 export default function BlogCard({ post }: { post: PostPreview }) {
   const t = useTranslations("blog");
-  const cardRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLAnchorElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-40px" });
 
-  const rawX = useMotionValue(0);
-  const rawY = useMotionValue(0);
-  const rotX = useSpring(useTransform(rawY, [-0.5, 0.5], [6, -6]),  { stiffness: 200, damping: 20 });
-  const rotY = useSpring(useTransform(rawX, [-0.5, 0.5], [-6, 6]), { stiffness: 200, damping: 20 });
-  const glowX = useTransform(rawX, [-0.5, 0.5], [0, 100]);
-  const glowY = useTransform(rawY, [-0.5, 0.5], [0, 100]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    rawX.set((e.clientX - rect.left) / rect.width - 0.5);
-    rawY.set((e.clientY - rect.top) / rect.height - 0.5);
-  };
-  const handleMouseLeave = () => { rawX.set(0); rawY.set(0); };
-
-  const formattedDate = post.publishedAt
-    ? new Intl.DateTimeFormat("en", { month: "short", day: "numeric", year: "numeric" }).format(
-        new Date(post.publishedAt)
-      )
+  const date = post.publishedAt
+    ? new Intl.DateTimeFormat("en", { month: "short", day: "numeric", year: "numeric" }).format(new Date(post.publishedAt))
     : null;
 
   return (
     <motion.div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ rotateX: rotX, rotateY: rotY, transformStyle: "preserve-3d" }}
-      className="group relative flex flex-col rounded-(--radius-2xl) border border-(--color-border) dark:border-(--color-border-dark) bg-(--color-surface) dark:bg-(--color-surface-dark) overflow-hidden hover:border-(--color-accent)/35 dark:hover:border-(--color-accent-dark)/30 hover:shadow-2xl hover:shadow-(--color-accent)/10 dark:hover:shadow-(--color-accent-dark)/10 transition-all duration-300"
+      initial={{ opacity: 0, y: 16 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
     >
-      {/* Spotlight glow */}
-      <motion.div
-        className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        style={{
-          background: useTransform(
-            [glowX, glowY],
-            ([x, y]) => `radial-gradient(180px circle at ${x}% ${y}%, rgba(99,102,241,0.10), transparent 60%)`
-          ),
-        }}
-      />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-(--color-accent) dark:from-(--color-accent-dark) to-(--color-accent-2) dark:to-(--color-accent-2-dark) opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <Link
+        ref={ref}
+        href={`/blog/${post.slug}`}
+        className="group flex flex-col gap-4 border border-(--color-border) dark:border-(--color-border-dark) bg-(--color-surface) dark:bg-(--color-surface-dark) p-6 hover:border-(--color-accent)/50 dark:hover:border-(--color-accent-dark)/45 transition-all duration-300 relative overflow-hidden"
+        style={{ borderRadius: "var(--radius-md)" }}
+      >
+        {/* Accent line on hover */}
+        <div
+          className="absolute top-0 left-0 right-0 h-[2px] bg-(--color-accent) dark:bg-(--color-accent-dark) scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"
+        />
 
-      <Link href={`/blog/${post.slug}`} className="flex flex-col gap-4 p-6 flex-1">
+        {/* Tags */}
         {post.tags.length > 0 && (
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex flex-wrap gap-2">
             {post.tags.slice(0, 3).map((tag) => (
-              <span key={tag} className="rounded-full bg-(--color-accent-subtle) dark:bg-(--color-accent-dark-subtle) border border-(--color-accent)/15 dark:border-(--color-accent-dark)/15 px-2.5 py-0.5 text-xs font-semibold text-(--color-accent) dark:text-(--color-accent-dark)">
+              <span
+                key={tag}
+                className="font-mono text-[10px] font-bold uppercase tracking-wider text-(--color-accent) dark:text-(--color-accent-dark)"
+              >
                 {tag}
               </span>
             ))}
@@ -71,7 +55,7 @@ export default function BlogCard({ post }: { post: PostPreview }) {
         )}
 
         <div className="flex flex-col gap-2 flex-1">
-          <h3 className="font-bold text-(--color-text) dark:text-(--color-text-dark) group-hover:text-(--color-accent) dark:group-hover:text-(--color-accent-dark) transition-colors line-clamp-2 leading-snug">
+          <h3 className="font-bold text-(--color-text) dark:text-(--color-text-dark) group-hover:text-(--color-accent) dark:group-hover:text-(--color-accent-dark) transition-colors leading-snug line-clamp-2">
             {post.title}
           </h3>
           <p className="text-sm text-(--color-muted) dark:text-(--color-muted-dark) leading-relaxed line-clamp-3">
@@ -79,13 +63,15 @@ export default function BlogCard({ post }: { post: PostPreview }) {
           </p>
         </div>
 
-        <div className="flex items-center justify-between pt-2 border-t border-(--color-border) dark:border-(--color-border-dark)">
-          {formattedDate && (
-            <span className="text-xs text-(--color-muted) dark:text-(--color-muted-dark)">{formattedDate}</span>
+        <div className="flex items-center justify-between pt-3 border-t border-(--color-border) dark:border-(--color-border-dark)">
+          {date && (
+            <span className="font-mono text-xs text-(--color-muted) dark:text-(--color-muted-dark)">
+              {date}
+            </span>
           )}
-          <span className="ml-auto text-xs font-bold text-(--color-accent) dark:text-(--color-accent-dark) flex items-center gap-1.5 group-hover:gap-2 transition-all duration-200">
+          <span className="ml-auto font-mono text-[10px] uppercase tracking-widest text-(--color-accent) dark:text-(--color-accent-dark) flex items-center gap-1.5 group-hover:gap-2.5 transition-all duration-200">
             {t("read_more")}
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M3 8h10M9 4l4 4-4 4" />
             </svg>
           </span>
