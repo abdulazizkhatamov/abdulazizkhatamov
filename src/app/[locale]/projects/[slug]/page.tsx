@@ -64,12 +64,31 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+async function getGithubStars(githubUrl: string): Promise<number | null> {
+  try {
+    const match = githubUrl.match(/github\.com\/([^/]+)\/([^/]+)/);
+    if (!match) return null;
+    const res = await fetch(`https://api.github.com/repos/${match[1]}/${match[2]}`, {
+      headers: { Accept: "application/vnd.github+json" },
+      next: { revalidate: 3600 },
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (data.private) return null;
+    return data.stargazers_count as number;
+  } catch {
+    return null;
+  }
+}
+
 export default async function ProjectDetailPage({ params }: Props) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
 
   const project = await prisma.project.findUnique({ where: { slug } });
   if (!project) notFound();
+
+  const githubStars = project.githubUrl ? await getGithubStars(project.githubUrl) : null;
 
   const details = project.details as ProjectDetails | null;
 
@@ -145,6 +164,21 @@ export default async function ProjectDetailPage({ params }: Props) {
                 style={{ borderRadius: "var(--radius-sm)" }}
               >
                 Source ↗
+              </a>
+            )}
+            {project.githubUrl && githubStars !== null && (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-9 items-center gap-2 border border-(--color-accent)/40 dark:border-(--color-accent-dark)/40 text-(--color-accent) dark:text-(--color-accent-dark) px-4 font-mono text-xs font-bold uppercase tracking-widest hover:bg-(--color-accent-subtle) dark:hover:bg-(--color-accent-dark-subtle) transition-colors"
+                style={{ borderRadius: "var(--radius-sm)" }}
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
+                Star
+                <span className="opacity-70">{githubStars.toLocaleString()}</span>
               </a>
             )}
           </div>
