@@ -10,6 +10,7 @@ import FeaturedProjects from "@/components/sections/FeaturedProjects";
 import LatestPosts from "@/components/sections/LatestPosts";
 import ContactCTA from "@/components/sections/ContactCTA";
 import prisma from "@/lib/prisma";
+import { getAllPosts } from "@/lib/blog";
 import { personJsonLd, websiteJsonLd } from "@/lib/jsonld";
 
 const BASE_URL = "https://abdulaziz.cv";
@@ -70,30 +71,18 @@ export default async function HomePage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [featuredProjects, latestPosts, skills, experience, settings] =
-    await Promise.all([
-      prisma.project.findMany({
-        where: { featured: true },
-        orderBy: { order: "asc" },
-        take: 3,
-      }),
-      prisma.blogPost.findMany({
-        where: { published: true },
-        orderBy: { publishedAt: "desc" },
-        take: 3,
-        select: {
-          id: true,
-          title: true,
-          slug: true,
-          excerpt: true,
-          tags: true,
-          publishedAt: true,
-        },
-      }),
-      prisma.skill.findMany({ orderBy: { order: "asc" } }),
-      prisma.experience.findMany({ orderBy: { order: "asc" } }),
-      prisma.siteSettings.findUnique({ where: { id: "singleton" } }),
-    ]);
+  const latestPosts = getAllPosts().slice(0, 3);
+
+  const [featuredProjects, skills, experience, settings] = await Promise.all([
+    prisma.project.findMany({
+      where: { featured: true },
+      orderBy: { order: "asc" },
+      take: 3,
+    }),
+    prisma.skill.findMany({ orderBy: { order: "asc" } }),
+    prisma.experience.findMany({ orderBy: { order: "asc" } }),
+    prisma.siteSettings.findUnique({ where: { id: "singleton" } }),
+  ]);
 
   return (
     <>

@@ -4,24 +4,18 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-
-type PostPreview = {
-  id: string;
-  title: string;
-  slug: string;
-  excerpt: string;
-  tags: string[];
-  publishedAt: Date | null;
-};
+import type { PostPreview } from "@/lib/blog";
 
 export default function BlogCard({ post }: { post: PostPreview }) {
   const t = useTranslations("blog");
   const ref = useRef<HTMLAnchorElement>(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
 
-  const date = post.publishedAt
-    ? new Intl.DateTimeFormat("en", { month: "short", day: "numeric", year: "numeric" }).format(new Date(post.publishedAt))
-    : null;
+  const date = new Intl.DateTimeFormat("en", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(post.publishedAt);
 
   return (
     <motion.div
@@ -36,9 +30,7 @@ export default function BlogCard({ post }: { post: PostPreview }) {
         style={{ borderRadius: "var(--radius-md)" }}
       >
         {/* Accent line on hover */}
-        <div
-          className="absolute top-0 left-0 right-0 h-[2px] bg-(--color-accent) dark:bg-(--color-accent-dark) scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"
-        />
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-(--color-accent) dark:bg-(--color-accent-dark) scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
 
         {/* Tags */}
         {post.tags.length > 0 && (
@@ -64,12 +56,10 @@ export default function BlogCard({ post }: { post: PostPreview }) {
         </div>
 
         <div className="flex items-center justify-between pt-3 border-t border-(--color-border) dark:border-(--color-border-dark)">
-          {date && (
-            <span className="font-mono text-xs text-(--color-muted) dark:text-(--color-muted-dark)">
-              {date}
-            </span>
-          )}
-          <span className="ml-auto font-mono text-[10px] uppercase tracking-widest text-(--color-accent) dark:text-(--color-accent-dark) flex items-center gap-1.5 group-hover:gap-2.5 transition-all duration-200">
+          <span className="font-mono text-xs text-(--color-muted) dark:text-(--color-muted-dark)">
+            {date}
+          </span>
+          <span className="font-mono text-[10px] uppercase tracking-widest text-(--color-accent) dark:text-(--color-accent-dark) flex items-center gap-1.5 group-hover:gap-2.5 transition-all duration-200">
             {t("read_more")}
             <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M3 8h10M9 4l4 4-4 4" />

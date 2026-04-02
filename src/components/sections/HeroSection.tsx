@@ -55,6 +55,7 @@ export default function HeroSection({ openToWork }: { openToWork: boolean }) {
     <motion.section
       ref={ref}
       className="relative min-h-[100svh] flex flex-col px-5 sm:px-12 lg:px-20 pt-20 pb-8 overflow-hidden"
+      suppressHydrationWarning
       style={{ opacity }}
     >
       {/* Subtle grid texture */}
@@ -111,6 +112,7 @@ export default function HeroSection({ openToWork }: { openToWork: boolean }) {
         <h1
           className="font-black leading-[0.85] tracking-[-0.04em] select-none"
           style={{ fontSize: "clamp(1.9rem, 10.5vw, 12rem)" }}
+          suppressHydrationWarning
         >
           <CharReveal
             text="ABDULAZIZ"

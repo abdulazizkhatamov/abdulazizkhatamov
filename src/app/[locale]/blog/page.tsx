@@ -1,25 +1,15 @@
-export const dynamic = "force-dynamic";
-
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { useTranslations } from "next-intl";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import BlogCard from "@/components/blog/BlogCard";
-import prisma from "@/lib/prisma";
+import { getAllPosts } from "@/lib/blog";
 import { breadcrumbJsonLd } from "@/lib/jsonld";
+import type { PostPreview } from "@/lib/blog";
 
 const BASE_URL = "https://abdulaziz.cv";
 
 type Props = { params: Promise<{ locale: string }> };
-
-type PostPreview = {
-  id: string;
-  title: string;
-  slug: string;
-  excerpt: string;
-  tags: string[];
-  publishedAt: Date | null;
-};
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
@@ -64,18 +54,7 @@ export default async function BlogPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const posts: PostPreview[] = await prisma.blogPost.findMany({
-    where: { published: true },
-    orderBy: { publishedAt: "desc" },
-    select: {
-      id: true,
-      title: true,
-      slug: true,
-      excerpt: true,
-      tags: true,
-      publishedAt: true,
-    },
-  });
+  const posts = getAllPosts();
 
   const ldBreadcrumb = breadcrumbJsonLd([
     { name: "Home", item: `${BASE_URL}/${locale}` },
@@ -115,7 +94,7 @@ function BlogContent({ posts }: { posts: PostPreview[] }) {
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (
-            <BlogCard key={post.id} post={post} />
+            <BlogCard key={post.slug} post={post} />
           ))}
         </div>
       )}

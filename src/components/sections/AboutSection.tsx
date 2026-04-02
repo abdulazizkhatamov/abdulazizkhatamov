@@ -58,7 +58,7 @@ function StatCounter({
         <motion.span>{display}</motion.span>
         <span>{suffix}</span>
       </div>
-      <div className="font-mono text-[11px] uppercase tracking-[0.24em] text-(--color-muted) dark:text-(--color-muted-dark)">
+      <div suppressHydrationWarning className="font-mono text-[11px] uppercase tracking-[0.24em] text-(--color-muted) dark:text-(--color-muted-dark)">
         {label}
       </div>
     </motion.div>

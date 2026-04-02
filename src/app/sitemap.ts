@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import prisma from "@/lib/prisma";
+import { getAllPosts } from "@/lib/blog";
 
 const BASE_URL = "https://abdulaziz.cv";
 const locales = ["en", "uz", "ru"] as const;
@@ -34,13 +35,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }))
   );
 
-  const [projects, posts] = await Promise.all([
-    prisma.project.findMany({ select: { slug: true, updatedAt: true } }),
-    prisma.blogPost.findMany({
-      where: { published: true },
-      select: { slug: true, updatedAt: true },
-    }),
-  ]);
+  const projects = await prisma.project.findMany({
+    select: { slug: true, updatedAt: true },
+  });
+
+  const mdPosts = getAllPosts();
 
   const projectEntries: MetadataRoute.Sitemap = projects.flatMap((p) =>
     locales.map((locale) => ({
@@ -52,10 +51,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
   );
 
-  const postEntries: MetadataRoute.Sitemap = posts.flatMap((p) =>
+  const postEntries: MetadataRoute.Sitemap = mdPosts.flatMap((p) =>
     locales.map((locale) => ({
       url: `${BASE_URL}/${locale}/blog/${p.slug}`,
-      lastModified: p.updatedAt,
+      lastModified: p.publishedAt,
       changeFrequency: "weekly" as const,
       priority: 0.6,
       alternates: buildAlternates(`/blog/${p.slug}`),

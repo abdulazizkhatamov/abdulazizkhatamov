@@ -1,34 +1,30 @@
 import { ImageResponse } from "next/og";
-import prisma from "@/lib/prisma";
+import { getAllSlugs, getPostBySlug } from "@/lib/blog";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export const alt = "Blog Post — Abdulaziz Hatamov";
-export const dynamic = "force-dynamic";
+
+export async function generateStaticParams() {
+  return getAllSlugs().map((slug) => ({ slug }));
+}
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
 export default async function BlogOGImage({ params }: Props) {
   const { slug } = await params;
-  const post = await prisma.blogPost.findUnique({
-    where: { slug, published: true },
-    select: { title: true, excerpt: true, tags: true, publishedAt: true },
-  });
+  const post = await getPostBySlug(slug);
 
   if (!post) return new Response("Not found", { status: 404 });
 
   const excerpt =
-    post.excerpt.length > 120
-      ? post.excerpt.slice(0, 120) + "…"
-      : post.excerpt;
+    post.excerpt.length > 120 ? post.excerpt.slice(0, 120) + "…" : post.excerpt;
 
-  const date = post.publishedAt
-    ? new Intl.DateTimeFormat("en", {
-        month: "long",
-        day: "numeric",
-        year: "numeric",
-      }).format(new Date(post.publishedAt))
-    : null;
+  const date = new Intl.DateTimeFormat("en", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  }).format(post.publishedAt);
 
   const tags = post.tags.slice(0, 4);
 
@@ -48,7 +44,6 @@ export default async function BlogOGImage({ params }: Props) {
           overflow: "hidden",
         }}
       >
-        {/* Grid texture */}
         <div
           style={{
             position: "absolute",
@@ -59,131 +54,37 @@ export default async function BlogOGImage({ params }: Props) {
           }}
         />
 
-        {/* Top label */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "16px",
-            position: "relative",
-          }}
-        >
-          <span
-            style={{
-              color: "#c8ff00",
-              fontFamily: "ui-monospace, Menlo, monospace",
-              fontSize: "12px",
-              fontWeight: 700,
-              letterSpacing: "0.3em",
-              textTransform: "uppercase",
-            }}
-          >
+        <div style={{ display: "flex", alignItems: "center", gap: "16px", position: "relative" }}>
+          <span style={{ color: "#c8ff00", fontFamily: "ui-monospace, Menlo, monospace", fontSize: "12px", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase" }}>
             abdulaziz.cv / blog
           </span>
-          <div
-            style={{ flex: 1, height: "1px", background: "rgba(200,255,0,0.2)" }}
-          />
-          {date && (
-            <span
-              style={{
-                color: "#555550",
-                fontFamily: "ui-monospace, Menlo, monospace",
-                fontSize: "12px",
-                letterSpacing: "0.1em",
-              }}
-            >
-              {date}
-            </span>
-          )}
+          <div style={{ flex: 1, height: "1px", background: "rgba(200,255,0,0.2)" }} />
+          <span style={{ color: "#555550", fontFamily: "ui-monospace, Menlo, monospace", fontSize: "12px", letterSpacing: "0.1em" }}>
+            {date}
+          </span>
         </div>
 
-        {/* Content */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "20px",
-            position: "relative",
-          }}
-        >
+        <div style={{ display: "flex", flexDirection: "column", gap: "20px", position: "relative" }}>
           {tags.length > 0 && (
-            <div style={{ display: "flex", gap: "8px" }}>
+            <div style={{ display: "flex", gap: "12px" }}>
               {tags.map((tag) => (
-                <span
-                  key={tag}
-                  style={{
-                    color: "#c8ff00",
-                    fontFamily: "ui-monospace, Menlo, monospace",
-                    fontSize: "12px",
-                    fontWeight: 700,
-                    letterSpacing: "0.2em",
-                    textTransform: "uppercase",
-                  }}
-                >
+                <span key={tag} style={{ color: "#c8ff00", fontFamily: "ui-monospace, Menlo, monospace", fontSize: "12px", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase" }}>
                   {tag}
                 </span>
               ))}
             </div>
           )}
-
-          <h1
-            style={{
-              color: "#e8e8e4",
-              fontSize: "64px",
-              fontWeight: 900,
-              margin: 0,
-              lineHeight: 1.0,
-              letterSpacing: "-0.025em",
-              maxWidth: "1000px",
-            }}
-          >
+          <h1 style={{ color: "#e8e8e4", fontSize: "64px", fontWeight: 900, margin: 0, lineHeight: 1.0, letterSpacing: "-0.025em", maxWidth: "1000px" }}>
             {post.title}
           </h1>
-
-          <p
-            style={{
-              color: "#888880",
-              fontSize: "19px",
-              margin: 0,
-              lineHeight: 1.55,
-              maxWidth: "880px",
-            }}
-          >
+          <p style={{ color: "#888880", fontSize: "19px", margin: 0, lineHeight: 1.55, maxWidth: "880px" }}>
             {excerpt}
           </p>
         </div>
 
-        {/* Bottom strip */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            borderTop: "1px solid rgba(255,255,255,0.08)",
-            paddingTop: "24px",
-            position: "relative",
-          }}
-        >
-          <span
-            style={{
-              color: "#444440",
-              fontFamily: "ui-monospace, Menlo, monospace",
-              fontSize: "13px",
-            }}
-          >
-            abdulaziz.cv
-          </span>
-          <span
-            style={{
-              color: "#c8ff00",
-              fontFamily: "ui-monospace, Menlo, monospace",
-              fontSize: "13px",
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-            }}
-          >
-            ABDULAZIZ HATAMOV
-          </span>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: "24px", position: "relative" }}>
+          <span style={{ color: "#444440", fontFamily: "ui-monospace, Menlo, monospace", fontSize: "13px" }}>abdulaziz.cv</span>
+          <span style={{ color: "#c8ff00", fontFamily: "ui-monospace, Menlo, monospace", fontSize: "13px", letterSpacing: "0.2em", textTransform: "uppercase" }}>ABDULAZIZ HATAMOV</span>
         </div>
       </div>
     ),

@@ -3,7 +3,7 @@ import { Link } from "@/i18n/navigation";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import { SectionLabel } from "./AboutSection";
 
-type PostPreview = { id: string; title: string; slug: string; excerpt: string; tags: string[]; publishedAt: Date | null };
+import type { PostPreview } from "@/lib/blog";
 type Props = { posts: PostPreview[] };
 
 export default function LatestPosts({ posts }: Props) {
@@ -38,7 +38,7 @@ export default function LatestPosts({ posts }: Props) {
 
           <div className="flex flex-col">
             {posts.map((post, index) => (
-              <PostRow key={post.id} post={post} index={index} readMore={t("read_more")} />
+              <PostRow key={post.slug} post={post} index={index} readMore={t("read_more")} />
             ))}
           </div>
         </>
@@ -69,9 +69,7 @@ function PostRow({
   readMore: string;
 }) {
   const num = String(index + 1).padStart(2, "0");
-  const date = post.publishedAt
-    ? new Intl.DateTimeFormat("en", { month: "short", year: "2-digit" }).format(new Date(post.publishedAt))
-    : null;
+  const date = new Intl.DateTimeFormat("en", { month: "short", year: "2-digit" }).format(post.publishedAt);
 
   return (
     <Link
@@ -87,7 +85,7 @@ function PostRow({
           </h3>
         </div>
         <div className="flex items-center gap-3 ml-6">
-          {date && <span className="font-mono text-xs text-(--color-muted) dark:text-(--color-muted-dark)">{date}</span>}
+          <span className="font-mono text-xs text-(--color-muted) dark:text-(--color-muted-dark)">{date}</span>
           {post.tags[0] && (
             <span className="font-mono text-[10px] uppercase tracking-wider text-(--color-accent) dark:text-(--color-accent-dark)">
               {post.tags[0]}
@@ -108,7 +106,7 @@ function PostRow({
           </span>
         </div>
         <span className="font-mono text-xs text-(--color-muted) dark:text-(--color-muted-dark)">
-          {date ?? "—"}
+          {date}
         </span>
         <div className="flex flex-wrap gap-1.5">
           {post.tags.slice(0, 2).map((tag) => (
