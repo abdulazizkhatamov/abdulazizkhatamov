@@ -110,7 +110,7 @@ export default function AboutSection() {
             className="font-black text-(--color-text) dark:text-(--color-text-dark) leading-none"
             style={{ fontSize: "clamp(1.4rem, 3vw, 1.9rem)" }}
           >
-            Fergana
+            Uzbekistan
           </div>
           <div className="font-mono text-[11px] uppercase tracking-[0.24em] text-(--color-muted) dark:text-(--color-muted-dark)">
             {t("label_location")}
