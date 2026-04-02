@@ -3,17 +3,10 @@ import prisma from "@/lib/prisma";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
+export const alt = "Project — Abdulaziz Hatamov";
+export const dynamic = "force-dynamic";
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
-
-export async function generateImageMetadata({ params }: Props) {
-  const { slug } = await params;
-  const project = await prisma.project.findUnique({
-    where: { slug },
-    select: { title: true },
-  });
-  return [{ id: slug, alt: project?.title ?? slug }];
-}
 
 export default async function ProjectOGImage({ params }: Props) {
   const { slug } = await params;
