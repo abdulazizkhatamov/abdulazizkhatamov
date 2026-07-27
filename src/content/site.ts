@@ -6,9 +6,11 @@ export const site = {
   location: "Margilan, Uzbekistan",
   timezone: "UTC+5",
 
-  // 15 minutes, not 30 — a cold prospect will not commit half an hour, and the smallest
-  // possible next step is the whole point of the CTA.
-  calLink: "https://cal.com/abdulazizhatamov/15min" as string | null,
+  // Deliberately null. Abdulaziz works in writing, not on calls, so the site does not offer
+  // one - a booking button he does not want anyone to press is worse than no button.
+  // The Cal.com link still exists (cal.com/abdulazizhatamov/15min) if this ever changes:
+  // put it back here and both buttons return.
+  calLink: null as string | null,
 
   linkedin: "https://www.linkedin.com/in/abdulaziz-hatamov-224203324/",
   github: "https://github.com/abdulazizkhatamov",

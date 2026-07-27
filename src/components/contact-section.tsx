@@ -6,8 +6,9 @@ export function ContactSection() {
     <Section id="contact" label="Contact">
       <div className="max-w-2xl">
         <p className="text-xl leading-relaxed sm:text-2xl">
-          Tell me what you are trying to ship and by when. I will tell you what it costs
-          and whether I am the right person for it.
+          Write to me with what you are trying to ship and by when. You will get back a
+          fixed price, a date, and an honest answer about whether I am the right person
+          for it.
         </p>
 
         <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
