@@ -1,86 +1,99 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { site } from "@/content/site";
 import "./globals.css";
-import CustomCursor from "@/components/ui/CustomCursor";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f0f0ec" },
-    { media: "(prefers-color-scheme: dark)", color: "#090909" },
-  ],
-};
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://abdulaziz.cv"),
-  title: {
-    default: "Abdulaziz Hatamov — Frontend Developer",
-    template: "%s — Abdulaziz Hatamov",
-  },
-  description:
-    "Frontend Developer with 4+ years of experience building production web applications with React, Next.js, TypeScript, and Node.js.",
-  keywords: [
-    "Abdulaziz Hatamov",
-    "frontend developer",
-    "full stack developer",
-    "React developer",
-    "Next.js developer",
-    "TypeScript",
-    "NestJS",
-    "web developer",
-    "JavaScript",
-    "portfolio",
-  ],
-  authors: [{ name: "Abdulaziz Hatamov", url: "https://abdulaziz.cv" }],
-  creator: "Abdulaziz Hatamov",
-  publisher: "Abdulaziz Hatamov",
-  applicationName: "Abdulaziz Hatamov Portfolio",
-  category: "technology",
-  formatDetection: { telephone: false },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
+  metadataBase: new URL(site.url),
+  title: site.title,
+  description: site.description,
+  alternates: { canonical: "/" },
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
       { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
     ],
-    apple: [
-      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
-    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
   },
-  manifest: "/manifest.webmanifest",
+  manifest: "/site.webmanifest",
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  keywords: [
+    "full-stack developer",
+    "contract developer",
+    "Next.js",
+    "React",
+    "NestJS",
+    "PostgreSQL",
+    "React Native",
+    "ecommerce development",
+    "AI automation",
+  ],
   openGraph: {
-    type: "website",
-    siteName: "Abdulaziz Hatamov",
+    type: "profile",
+    siteName: site.name,
+    title: site.title,
+    description: site.description,
+    url: site.url,
     locale: "en_US",
-    alternateLocale: ["uz_UZ", "ru_RU"],
   },
   twitter: {
     card: "summary_large_image",
-    creator: "@abdulazizkhatamov",
-    site: "@abdulazizkhatamov",
+    title: site.title,
+    description: site.description,
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0b0b0c" },
+  ],
+};
+
+/**
+ * Runs before first paint so the correct theme is applied without a flash.
+ * Kept as a string because it must be synchronous and inline.
+ */
+const themeScript = `
+(function(){try{
+  var s = localStorage.getItem('theme');
+  var d = s ? s === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  if (d) document.documentElement.classList.add('dark');
+}catch(e){}})();
+`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: site.name,
+  url: site.url,
+  email: `mailto:${site.email}`,
+  jobTitle: "Full-Stack Developer",
+  description: site.description,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Fergana",
+    addressCountry: "UZ",
+  },
+  sameAs: [site.linkedin, site.github],
+  knowsAbout: [
+    "Full-stack web development",
+    "Next.js",
+    "React",
+    "NestJS",
+    "PostgreSQL",
+    "React Native",
+    "Ecommerce platforms",
+    "AI integration",
+    "Web performance",
+  ],
+  knowsLanguage: ["en", "uz"],
 };
 
 export default function RootLayout({
@@ -88,12 +101,16 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        suppressHydrationWarning
-      >
-        <CustomCursor />
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
+      <body className="bg-bg text-fg antialiased">
         {children}
+        <Analytics />
       </body>
     </html>
   );
