@@ -64,6 +64,9 @@ export function Footer() {
         >
           Email
         </a>
+        <a href="/privacy" className="hover:text-fg transition-colors">
+          Privacy
+        </a>
       </div>
     </footer>
   );
