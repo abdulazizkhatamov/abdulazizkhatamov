@@ -78,7 +78,8 @@ const jsonLd = {
   description: site.description,
   address: {
     "@type": "PostalAddress",
-    addressLocality: "Fergana",
+    addressLocality: "Margilan",
+    addressRegion: "Fergana Region",
     addressCountry: "UZ",
   },
   sameAs: [site.linkedin, site.github],

@@ -3,7 +3,7 @@ export const site = {
   domain: "www.abdulaziz.cv",
   url: "https://www.abdulaziz.cv",
   email: "abdulaziz@abdulaziz.cv",
-  location: "Fergana, Uzbekistan",
+  location: "Margilan, Uzbekistan",
   timezone: "UTC+5",
 
   // 15 minutes, not 30 — a cold prospect will not commit half an hour, and the smallest
